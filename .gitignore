@@ -1,0 +1,9 @@
+# Don't track packages folder because it is too big to upload to git
+# Will have to reinstall the packages on your own computer
+packages/
+
+# Don't track .onnx because it is too big to upload to git
+*.onnx
+
+# The .vs folder doesn't need to be uploaded, it will be remade
+.vs/
