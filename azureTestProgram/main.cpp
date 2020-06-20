@@ -8,8 +8,15 @@
 
 #include <fbxsdk.h>
 
+#include "testFile.h"
+
 int main(int argc, char **argv) 
-{
-	std::cout << "test" << std::endl;
+{	
+	testFunction();
+
+	uint32_t count = k4a_device_get_installed_count();
+
+	std::cout << count << std::endl;
+
 	return 0;
 }
