@@ -9,6 +9,7 @@
 #include <fbxsdk.h>
 
 #include "modeOneFunctions.h"
+#include "modeTwoFunctions.h"
 
 //Syntax: azureProgram.exe (input.mkv) output.fbx
 	//If an input is provided program runs in mode 1
@@ -38,12 +39,11 @@ int main(int argc, char **argv)
 	}
 	else if (argc == 2) {
 		//Run mode 2
+		errorMessage = modeTwoFunction();
 	}
 	else {
 		//Invalid number of arguments
 		errorMessage = "Invalid number of arguments. Use \"azureProgram.exe (input.mkv) output.fbx\".";
-
-		return EXIT_FAILURE;
 	}
 
 	if (errorMessage == "") {
