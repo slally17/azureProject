@@ -29,5 +29,8 @@
     <ClInclude Include="modeOneFunctions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="modeTwoFunctions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

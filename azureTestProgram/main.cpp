@@ -10,10 +10,12 @@
 
 #include "modeOneFunctions.h"
 #include "modeTwoFunctions.h"
+#include "modeThreeFunctions.h"
 
-//Syntax: azureProgram.exe (input.mkv) output.fbx
-	//If an input is provided program runs in mode 1
-	//If an input is not provided program runs in mode 2
+//Syntax: azureProgram.exe (input.mkv) (output.fbx)
+	//If an input and output are provided program runs in mode 1
+	//If only an output is provided program runs in mode 2
+	//If neither are provided program runs in mode 3
 
 //Mode 1: Create skeletons from saved mkv file
 	//Step 1: Get mkv file
@@ -29,6 +31,9 @@
 	//Step 3: End recording (Press space bar to stop recording)
 	//Step 4: Create fbx from skeleton data
 
+//Mode 3: Stream Kinect skeletons to Unity
+	//Future planning
+
 int main(int argc, char **argv) 
 {	
 	std::string errorMessage = "";
@@ -41,9 +46,13 @@ int main(int argc, char **argv)
 		//Run mode 2
 		errorMessage = modeTwoFunction();
 	}
+	else if (argc == 1) {
+		//Run mode 3
+		errorMessage = modeThreeFunction();
+	}
 	else {
 		//Invalid number of arguments
-		errorMessage = "Invalid number of arguments. Use \"azureProgram.exe (input.mkv) output.fbx\".";
+		errorMessage = "Invalid number of arguments. Use \"azureProgram.exe (input.mkv) (output.fbx)\".";
 	}
 
 	if (errorMessage == "") {
