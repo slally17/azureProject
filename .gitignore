@@ -7,3 +7,6 @@ packages/
 
 # The .vs folder doesn't need to be uploaded, it will be remade
 .vs/
+
+# The x64 build file doesn't need to be uploaded, it will be remade
+x64/

@@ -5,6 +5,7 @@
 #include <k4a/k4a.h>
 #include <k4arecord/record.h>
 #include <k4arecord/playback.h>
+#include <k4abt.h>
 
 #include <fbxsdk.h>
 
@@ -40,7 +41,7 @@ int main(int argc, char **argv)
 	
 	if (argc == 3) {
 		//Run mode 1
-		errorMessage = modeOneFunction();
+		errorMessage = modeOneFunction(argv[1], argv[2]);
 	}
 	else if (argc == 2) {
 		//Run mode 2
