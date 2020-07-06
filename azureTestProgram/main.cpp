@@ -45,7 +45,7 @@ int main(int argc, char **argv)
 	}
 	else if (argc == 2) {
 		//Run mode 2
-		errorMessage = modeTwoFunction();
+		errorMessage = modeTwoFunction(argv[1]);
 	}
 	else if (argc == 1) {
 		//Run mode 3
