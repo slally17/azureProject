@@ -4,7 +4,7 @@
 #include <string>
 
 std::string modeThreeFunction() {
-	std::string errorMessage = "";
+	std::string errorMessage = "This mode has not been created yet.\n";
 
 	return errorMessage;
 }

@@ -53,18 +53,17 @@ std::string modeTwoFunction(const char* output_path) {
 			k4a_wait_result_t get_capture_result = k4a_device_get_capture(device, &sensor_capture, K4A_WAIT_INFINITE);
 
 			//Process current frame
-			if (get_capture_result == K4A_WAIT_RESULT_SUCCEEDED) {
+			if (get_capture_result == K4A_WAIT_RESULT_SUCCEEDED && running) {
 				k4a_wait_result_t queue_capture_result = k4abt_tracker_enqueue_capture(tracker, sensor_capture, K4A_WAIT_INFINITE);
 				k4a_capture_release(sensor_capture);
 				if (queue_capture_result == K4A_WAIT_RESULT_FAILED)	{
 					errorMessage += ("Add capture to tracker process queue failed.\n");
-					break;
 				}
 
 				//Get skeleton from current frame
 				k4abt_frame_t body_frame = NULL;
 				k4a_wait_result_t pop_frame_result = k4abt_tracker_pop_result(tracker, &body_frame, K4A_WAIT_INFINITE);
-				if (pop_frame_result == K4A_WAIT_RESULT_SUCCEEDED) {
+				if (pop_frame_result == K4A_WAIT_RESULT_SUCCEEDED && errorMessage == "") {
 					uint32_t num_bodies = k4abt_frame_get_num_bodies(body_frame);
 					if (num_bodies > 0) {
 						k4abt_skeleton_t skeleton;
@@ -77,12 +76,10 @@ std::string modeTwoFunction(const char* output_path) {
 				}
 				else {
 					errorMessage += "Pop body frame result failed.\n";
-					break;
 				}
 			}
 			else {
 				errorMessage += "Get depth capture returned error.\n";
-				break;
 			}
 		}
 
