@@ -1,5 +1,7 @@
 #pragma once
 
+#include "fbxFunctions.h"
+
 bool check_depth_image_exists(k4a_capture_t capture)
 {
 	k4a_image_t depth = k4a_capture_get_depth_image(capture);
@@ -13,6 +15,7 @@ bool check_depth_image_exists(k4a_capture_t capture)
 }
 
 std::string modeOneFunction(const char* input_path, const char* output_path) {
+	std::vector<k4abt_skeleton_t> skeletons;
 	std::string errorMessage = "";
 
 	//Find the mkv file and check that it exists
@@ -60,10 +63,8 @@ std::string modeOneFunction(const char* input_path, const char* output_path) {
 					if (num_bodies > 0) {
 						k4abt_skeleton_t skeleton;
 						k4abt_frame_get_body_skeleton(body_frame, 0, &skeleton);
+						skeletons.push_back(skeleton);
 					}
-
-					//THIS IS WHERE CODE FOR WHAT TO DO WITH SKELETON GOES
-
 					k4abt_frame_release(body_frame);
 				}
 				else {
@@ -76,7 +77,18 @@ std::string modeOneFunction(const char* input_path, const char* output_path) {
 		}
 		else {
 			errorMessage += "Failed to read current frame.\n";
-		}		
+		}	
+	}
+
+	//Release tracker and recording
+	k4abt_tracker_shutdown(tracker);
+	k4abt_tracker_destroy(tracker);
+	k4a_playback_close(playback_handle);
+
+	//Create FBX from skeletons vector
+	bool success = createFBX(skeletons, output_path);	
+	if (!success) {
+		errorMessage += "An error occurred while creating the fbx..\n";
 	}
 
 	return errorMessage;

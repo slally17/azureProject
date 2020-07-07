@@ -1,12 +1,11 @@
 #pragma once
 
-#include <iostream>
-#include <string>
-
+#include "fbxFunctions.h"
 #include "windows.h"
 
 std::string modeTwoFunction(const char* output_path) {
 	std::string errorMessage = "";
+	std::vector<k4abt_skeleton_t> skeletons;
 	uint32_t kinectCount = k4a_device_get_installed_count();
 
 	if (kinectCount == 1) { //Run program if Kinect is found
@@ -68,10 +67,8 @@ std::string modeTwoFunction(const char* output_path) {
 					if (num_bodies > 0) {
 						k4abt_skeleton_t skeleton;
 						k4abt_frame_get_body_skeleton(body_frame, 0, &skeleton);
+						skeletons.push_back(skeleton);
 					}		
-
-					//THIS IS WHERE CODE FOR WHAT TO DO WITH SKELETON GOES
-
 					k4abt_frame_release(body_frame);
 				}
 				else {
@@ -83,14 +80,18 @@ std::string modeTwoFunction(const char* output_path) {
 			}
 		}
 
-		//Stop Kinect and release objects
+		//Stop Kinect and release tracker
 		k4abt_tracker_shutdown(tracker);
 		k4abt_tracker_destroy(tracker);
 		k4a_device_stop_cameras(device);
 		k4a_device_close(device);
 
-		//Create FBX
+		//Create FBX from skeletons vector
+		bool success = createFBX(skeletons, output_path);
 
+		if (!success) {
+			errorMessage += "An error occurred while creating the fbx..\n";
+		}
 	}
 	else if (kinectCount == 0) { //End program if Kinect isn't found
 		errorMessage += "Kinect can't be found by program, please try reconnecting.\n";

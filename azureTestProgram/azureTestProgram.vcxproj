@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BodyTrackingHelpers.h" />
+    <ClInclude Include="fbxFunctions.h" />
     <ClInclude Include="modeOneFunctions.h" />
     <ClInclude Include="modeThreeFunctions.h" />
     <ClInclude Include="modeTwoFunctions.h" />

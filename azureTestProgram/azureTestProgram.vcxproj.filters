@@ -22,6 +22,7 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +40,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="BodyTrackingHelpers.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fbxFunctions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

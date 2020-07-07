@@ -10,3 +10,6 @@ packages/
 
 # The x64 build file doesn't need to be uploaded, it will be remade
 x64/
+
+# Don't track .fbx files, they are the outputs
+*.fbx
