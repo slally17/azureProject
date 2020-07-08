@@ -110,82 +110,82 @@ void createNodes(FbxScene* pScene, std::vector<FbxNode*> *nodes) {
 	lRootNode->AddChild(pNodePelvis);
 	nodes->push_back(pNodePelvis);
 	FbxNode* pNodeSpineNaval = FbxNode::Create(pScene, "Spine_Naval");
-	lRootNode->AddChild(pNodeSpineNaval);
+	pNodePelvis->AddChild(pNodeSpineNaval);
 	nodes->push_back(pNodeSpineNaval);
 	FbxNode* pNodeSpineChest = FbxNode::Create(pScene, "Spine_Chest");
-	lRootNode->AddChild(pNodeSpineChest);
+	pNodeSpineNaval->AddChild(pNodeSpineChest);
 	nodes->push_back(pNodeSpineChest);
 	FbxNode* pNodeNeck = FbxNode::Create(pScene, "Neck");
-	lRootNode->AddChild(pNodeNeck);
+	pNodeSpineChest->AddChild(pNodeNeck);
 	nodes->push_back(pNodeNeck);
 	FbxNode* pNodeClavicleLeft = FbxNode::Create(pScene, "Clavicle_Left");
-	lRootNode->AddChild(pNodeClavicleLeft);
+	pNodeSpineChest->AddChild(pNodeClavicleLeft);
 	nodes->push_back(pNodeClavicleLeft);
 	FbxNode* pNodeShoulderLeft = FbxNode::Create(pScene, "Shoulder_Left");
-	lRootNode->AddChild(pNodeShoulderLeft);
+	pNodeClavicleLeft->AddChild(pNodeShoulderLeft);
 	nodes->push_back(pNodeShoulderLeft);
 	FbxNode* pNodeElbowLeft = FbxNode::Create(pScene, "Elbow_Left");
-	lRootNode->AddChild(pNodeElbowLeft);
+	pNodeShoulderLeft->AddChild(pNodeElbowLeft);
 	nodes->push_back(pNodeElbowLeft);
 	FbxNode* pNodeWristLeft = FbxNode::Create(pScene, "Wrist_Left");
-	lRootNode->AddChild(pNodeWristLeft);
+	pNodeElbowLeft->AddChild(pNodeWristLeft);
 	nodes->push_back(pNodeWristLeft);
 	FbxNode* pNodeHandLeft = FbxNode::Create(pScene, "Hand_Left");
-	lRootNode->AddChild(pNodeHandLeft);
+	pNodeWristLeft->AddChild(pNodeHandLeft);
 	nodes->push_back(pNodeHandLeft);
 	FbxNode* pNodeHandtipLeft = FbxNode::Create(pScene, "Handtip_Left");
-	lRootNode->AddChild(pNodeHandtipLeft);
+	pNodeHandLeft->AddChild(pNodeHandtipLeft);
 	nodes->push_back(pNodeHandtipLeft);
 	FbxNode* pNodeThumbLeft = FbxNode::Create(pScene, "Thumb_Left");
-	lRootNode->AddChild(pNodeThumbLeft);
+	pNodeHandtipLeft->AddChild(pNodeThumbLeft);
 	nodes->push_back(pNodeThumbLeft);
 	FbxNode* pNodeClavicleRight = FbxNode::Create(pScene, "Clavical_Right");
-	lRootNode->AddChild(pNodeClavicleRight);
+	pNodeSpineChest->AddChild(pNodeClavicleRight);
 	nodes->push_back(pNodeClavicleRight);
 	FbxNode* pNodeShoulderRight = FbxNode::Create(pScene, "Shoulder_Right");
-	lRootNode->AddChild(pNodeShoulderRight);
+	pNodeClavicleRight->AddChild(pNodeShoulderRight);
 	nodes->push_back(pNodeShoulderRight);
 	FbxNode* pNodeElbowRight = FbxNode::Create(pScene, "Elbow_Right");
-	lRootNode->AddChild(pNodeElbowRight);
+	pNodeShoulderRight->AddChild(pNodeElbowRight);
 	nodes->push_back(pNodeElbowRight);
 	FbxNode* pNodeWristRight = FbxNode::Create(pScene, "Wrist_Right");
-	lRootNode->AddChild(pNodeWristRight);
+	pNodeElbowRight->AddChild(pNodeWristRight);
 	nodes->push_back(pNodeWristRight);
 	FbxNode* pNodeHandRight = FbxNode::Create(pScene, "Hand_Right");
-	lRootNode->AddChild(pNodeHandRight);
+	pNodeWristRight->AddChild(pNodeHandRight);
 	nodes->push_back(pNodeHandRight);
 	FbxNode* pNodeHandtipRight = FbxNode::Create(pScene, "Handtip_Right");
-	lRootNode->AddChild(pNodeHandtipRight);
+	pNodeHandRight->AddChild(pNodeHandtipRight);
 	nodes->push_back(pNodeHandtipRight);
 	FbxNode* pNodeThumbRight = FbxNode::Create(pScene, "Thumb_Right");
-	lRootNode->AddChild(pNodeThumbRight);
+	pNodeHandtipRight->AddChild(pNodeThumbRight);
 	nodes->push_back(pNodeThumbRight);
 	FbxNode* pNodeHipLeft = FbxNode::Create(pScene, "Hip_Left");
-	lRootNode->AddChild(pNodeHipLeft);
+	pNodePelvis->AddChild(pNodeHipLeft);
 	nodes->push_back(pNodeHipLeft);
 	FbxNode* pNodeKneeLeft = FbxNode::Create(pScene, "Knee_Left");
-	lRootNode->AddChild(pNodeKneeLeft);
+	pNodeHipLeft->AddChild(pNodeKneeLeft);
 	nodes->push_back(pNodeKneeLeft);
 	FbxNode* pNodeAnkleLeft = FbxNode::Create(pScene, "Ankle_Left");
-	lRootNode->AddChild(pNodeAnkleLeft);
+	pNodeKneeLeft->AddChild(pNodeAnkleLeft);
 	nodes->push_back(pNodeAnkleLeft);
 	FbxNode* pNodeFootLeft = FbxNode::Create(pScene, "Foot_Left");
-	lRootNode->AddChild(pNodeFootLeft);
+	pNodeAnkleLeft->AddChild(pNodeFootLeft);
 	nodes->push_back(pNodeFootLeft);
 	FbxNode* pNodeHipRight = FbxNode::Create(pScene, "Hip_Right");
-	lRootNode->AddChild(pNodeHipRight);
+	pNodePelvis->AddChild(pNodeHipRight);
 	nodes->push_back(pNodeHipRight);
 	FbxNode* pNodeKneeRight = FbxNode::Create(pScene, "Knee_Right");
-	lRootNode->AddChild(pNodeKneeRight);
+	pNodeHipRight->AddChild(pNodeKneeRight);
 	nodes->push_back(pNodeKneeRight);
 	FbxNode* pNodeAnkleRight = FbxNode::Create(pScene, "Ankle_Right");
-	lRootNode->AddChild(pNodeAnkleRight);
+	pNodeKneeRight->AddChild(pNodeAnkleRight);
 	nodes->push_back(pNodeAnkleRight);
 	FbxNode* pNodeFootRight = FbxNode::Create(pScene, "Foot_Right");
-	lRootNode->AddChild(pNodeFootRight);
+	pNodeAnkleRight->AddChild(pNodeFootRight);
 	nodes->push_back(pNodeFootRight);
 	FbxNode* pNodeHead = FbxNode::Create(pScene, "Head");
-	lRootNode->AddChild(pNodeHead);
+	pNodeNeck->AddChild(pNodeHead);
 	nodes->push_back(pNodeHead);
 }
 
@@ -232,20 +232,38 @@ void CreateScene(FbxManager *pSdkManager, FbxScene* pScene, std::vector<k4abt_sk
 			//Set time
 			lTime.SetSecondDouble(j*(1.0 / 30));
 			
+			float position, offset;
 			//Set x-axis position
+			position = skeletons[j].joints[i].position.xyz.x;
+			if(nodes[i]->GetParent()) {
+				offset = nodes[i]->GetParent()->EvaluateGlobalTransform(lTime).GetT()[0];
+				position -= offset;
+			}
 			lKeyIndex = xTranCurve->KeyAdd(lTime);
 			xTranCurve->KeySet(lKeyIndex, lTime,
-				skeletons[j].joints[i].position.xyz.x, 
+				position, 
 				FbxAnimCurveDef::eInterpolationLinear);
+
 			//Set y-axis position
+			position = skeletons[j].joints[i].position.xyz.y;
+			if (nodes[i]->GetParent()) {
+				offset = nodes[i]->GetParent()->EvaluateGlobalTransform(lTime).GetT()[1];
+				position -= offset;
+			}
 			lKeyIndex = yTranCurve->KeyAdd(lTime);
 			yTranCurve->KeySet(lKeyIndex, lTime,
-				skeletons[j].joints[i].position.xyz.y,
+				position,
 				FbxAnimCurveDef::eInterpolationLinear);
+
 			//Set z-axis position
+			position = skeletons[j].joints[i].position.xyz.z;
+			if (nodes[i]->GetParent()) {
+				offset = nodes[i]->GetParent()->EvaluateGlobalTransform(lTime).GetT()[2];
+				position -= offset;
+			}
 			lKeyIndex = zTranCurve->KeyAdd(lTime);
 			zTranCurve->KeySet(lKeyIndex, lTime,
-				skeletons[j].joints[i].position.xyz.z,
+				position,
 				FbxAnimCurveDef::eInterpolationLinear);
 		}
 		//End animation curves
