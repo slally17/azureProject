@@ -28,14 +28,14 @@ std::string modeOneFunction(const char* input_path, const char* output_path) {
 	//Calibrate the mkv file to be played back
 	k4a_calibration_t calibration;
 	result = k4a_playback_get_calibration(playback_handle, &calibration);
-	if (K4A_RESULT_SUCCEEDED != result)	{
+	if (errorMessage == "" && K4A_RESULT_SUCCEEDED != result)	{
 		errorMessage += "Failed to get calibration.\n";
 	}
 
 	//Create body tracker
 	k4abt_tracker_t tracker = NULL;
 	k4abt_tracker_configuration_t tracker_config = K4ABT_TRACKER_CONFIG_DEFAULT;
-	if (K4A_RESULT_SUCCEEDED != k4abt_tracker_create(&calibration, tracker_config, &tracker)) {
+	if (errorMessage == "" && K4A_RESULT_SUCCEEDED != k4abt_tracker_create(&calibration, tracker_config, &tracker)) {
 		errorMessage += "Body tracker initialization failed.\n";
 	}
 
@@ -86,7 +86,10 @@ std::string modeOneFunction(const char* input_path, const char* output_path) {
 	k4a_playback_close(playback_handle);
 
 	//Create FBX from skeletons vector
-	bool success = createFBX(skeletons, output_path);	
+	bool success = true;
+	if (true) { //Replace true with errorMessage == ""
+		success = createFBX(skeletons, output_path);
+	}	
 	if (!success) {
 		errorMessage += "An error occurred while creating the fbx..\n";
 	}

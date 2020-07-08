@@ -22,14 +22,14 @@ std::string modeTwoFunction(const char* output_path) {
 		device_config.color_resolution = K4A_COLOR_RESOLUTION_2160P;
 		device_config.depth_mode = K4A_DEPTH_MODE_NFOV_UNBINNED;
 		k4a_calibration_t sensor_calibration;
-		if (K4A_FAILED(k4a_device_get_calibration(device, device_config.depth_mode, K4A_COLOR_RESOLUTION_OFF, &sensor_calibration))) {
+		if (errorMessage == "" && K4A_FAILED(k4a_device_get_calibration(device, device_config.depth_mode, K4A_COLOR_RESOLUTION_OFF, &sensor_calibration))) {
 			errorMessage += "Get depth camera calibration failed. \n";
 		}
 
 		//Create body tracker
 		k4abt_tracker_t tracker = NULL;
 		k4abt_tracker_configuration_t tracker_config = K4ABT_TRACKER_CONFIG_DEFAULT;
-		if (K4A_FAILED(k4abt_tracker_create(&sensor_calibration, tracker_config, &tracker))) {
+		if (errorMessage == "" && K4A_FAILED(k4abt_tracker_create(&sensor_calibration, tracker_config, &tracker))) {
 			errorMessage += "Body tracker initialization failed. \n";
 		}
 
@@ -87,8 +87,10 @@ std::string modeTwoFunction(const char* output_path) {
 		k4a_device_close(device);
 
 		//Create FBX from skeletons vector
-		bool success = createFBX(skeletons, output_path);
-
+		bool success = true;
+		if (errorMessage == "") {
+			success = createFBX(skeletons, output_path);
+		}
 		if (!success) {
 			errorMessage += "An error occurred while creating the fbx..\n";
 		}
