@@ -12,6 +12,8 @@
 
 #include "oscpack/osc/OscOutboundPacketStream.h"
 #include "oscpack/ip/UdpSocket.h"
+#include "oscpack/osc/OscReceivedElements.h"
+#include "oscpack/osc/OscPacketListener.h"
 
 #define ADDRESS "127.0.0.1"
 #define PORT 7000

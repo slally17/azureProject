@@ -40,8 +40,12 @@ std::string modeTwoFunction(const char* output_path) {
 		}
 
 		//Process Kinect recording data
+		int runTime = 0;
 		bool running = true;
-		while (running && errorMessage == "") {
+		while (running && errorMessage == "" && runTime < 108000) {
+			//Increment frame counter, max recording of 1 hour or 108000 frames
+			runTime++;
+
 			//Press spacebar to stop recording
 			if (GetAsyncKeyState(VK_SPACE)) { 
 				running = false;

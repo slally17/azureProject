@@ -150,7 +150,7 @@ public:
     bool IsBundle() const;
 
     osc_bundle_element_size_t Size() const;
-    const char *Contents() const { return sizePtr_ + osc::OSC_SIZEOF_INT32; }
+    const char *Contents() const { return sizePtr_ + (char)osc::OSC_SIZEOF_INT32; } //Added (char) to prevent + overload error
 
 private:
     const char *sizePtr_;
