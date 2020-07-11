@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\oscpack">
+      <UniqueIdentifier>{6ee29371-7fa0-40f8-a150-f63c41d22297}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\oscpack\ip">
+      <UniqueIdentifier>{93c732dc-c67e-4c0e-9066-cbb0a3efa8ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\oscpack\osc">
+      <UniqueIdentifier>{9411856d-2130-431a-a06a-5bbc65e360dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -23,10 +32,29 @@
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
     <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\content\**\*.*" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\ip\IpEndpointName.cpp">
+      <Filter>Source Files\oscpack\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\ip\NetworkingUtils.cpp">
+      <Filter>Source Files\oscpack\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\ip\UdpSocket.cpp">
+      <Filter>Source Files\oscpack\ip</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\osc\OscOutboundPacketStream.cpp">
+      <Filter>Source Files\oscpack\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\osc\OscReceivedElements.cpp">
+      <Filter>Source Files\oscpack\osc</Filter>
+    </ClCompile>
+    <ClCompile Include="oscpack\osc\OscTypes.cpp">
+      <Filter>Source Files\oscpack\osc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -44,6 +72,42 @@
     </ClInclude>
     <ClInclude Include="fbxFunctions.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\ip\IpEndpointName.h">
+      <Filter>Source Files\oscpack\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\ip\NetworkingUtils.h">
+      <Filter>Source Files\oscpack\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\ip\PacketListener.h">
+      <Filter>Source Files\oscpack\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\ip\TimerListener.h">
+      <Filter>Source Files\oscpack\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\ip\UdpSocket.h">
+      <Filter>Source Files\oscpack\ip</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\osc\MessageMappingOscPacketListener.h">
+      <Filter>Source Files\oscpack\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\osc\OscException.h">
+      <Filter>Source Files\oscpack\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\osc\OscHostEndianness.h">
+      <Filter>Source Files\oscpack\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\osc\OscOutboundPacketStream.h">
+      <Filter>Source Files\oscpack\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\osc\OscPacketListener.h">
+      <Filter>Source Files\oscpack\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\osc\OscReceivedElements.h">
+      <Filter>Source Files\oscpack\osc</Filter>
+    </ClInclude>
+    <ClInclude Include="oscpack\osc\OscTypes.h">
+      <Filter>Source Files\oscpack\osc</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

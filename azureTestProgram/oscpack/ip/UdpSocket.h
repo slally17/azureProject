@@ -34,6 +34,8 @@
 	requested that these non-binding requests be included whenever the
 	above license is reproduced.
 */
+#pragma comment(lib, "winmm.lib")
+
 #ifndef INCLUDED_OSCPACK_UDPSOCKET_H
 #define INCLUDED_OSCPACK_UDPSOCKET_H
 

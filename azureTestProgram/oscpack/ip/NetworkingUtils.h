@@ -34,6 +34,8 @@
 	requested that these non-binding requests be included whenever the
 	above license is reproduced.
 */
+#pragma comment(lib, "Ws2_32.lib")
+
 #ifndef INCLUDED_OSCPACK_NETWORKINGUTILS_H
 #define INCLUDED_OSCPACK_NETWORKINGUTILS_H
 

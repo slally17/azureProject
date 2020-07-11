@@ -34,8 +34,12 @@
 	requested that these non-binding requests be included whenever the
 	above license is reproduced.
 */
-#include "ip/NetworkingUtils.h"
+#include "NetworkingUtils.h"
 
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
+
+//#include <io.h>
+//#include <ws2tcpip.h>
 #include <winsock2.h>   // this must come first to prevent errors with MSVC7
 #include <windows.h>
 
@@ -77,19 +81,18 @@ NetworkInitializer::~NetworkInitializer()
     }
 }
 
-
 unsigned long GetHostByName( const char *name )
 {
-    NetworkInitializer networkInitializer;
+	NetworkInitializer networkInitializer;
 
-    unsigned long result = 0;
+	unsigned long result = 0;
 
-    struct hostent *h = gethostbyname( name );
-    if( h ){
-        struct in_addr a;
-        std::memcpy( &a, h->h_addr_list[0], h->h_length );
-        result = ntohl(a.s_addr);
-    }
+	struct hostent *h = gethostbyname(name);
+	if (h) {
+		struct in_addr a;
+		std::memcpy(&a, h->h_addr_list[0], h->h_length);
+		result = ntohl(a.s_addr);
+	}
 
-    return result;
+	return result;
 }

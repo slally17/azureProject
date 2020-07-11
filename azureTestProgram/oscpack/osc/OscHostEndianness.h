@@ -52,7 +52,7 @@
 
 // endianness defined on the command line. nothing to do here.
 
-#elif defined(__WIN32__) || defined(WIN32) || defined(WINCE)
+#elif defined(__WIN32__) || defined(WIN32) || defined(WINCE) || defined(_WINDOWS) || defined(_WIN32)
 
 // assume that __WIN32__ is only defined on little endian systems
 

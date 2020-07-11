@@ -48,6 +48,9 @@
 int main(int argc, char **argv) 
 {	
 	std::string errorMessage = "";
+	UdpTransmitSocket transmitSocket(IpEndpointName(ADDRESS, PORT));
+	char buffer[OUTPUT_BUFFER_SIZE];
+	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
 	
 	if (argc == 3) {
 		//Run mode 1
@@ -67,6 +70,17 @@ int main(int argc, char **argv)
 	}
 
 	if (errorMessage == "") {
+		//Send osc message when program is complete
+		
+		if (argc == 3) {
+			p << osc::BeginBundleImmediate << osc::BeginMessage("Fbx Created") << 1 << osc::EndMessage << osc::EndBundle;
+		}
+		else if (argc == 2) {
+			p << osc::BeginBundleImmediate << osc::BeginMessage("Fbx Created") << 2 << osc::EndMessage << osc::EndBundle;
+		}
+		transmitSocket.Send(p.Data(), p.Size());
+		
+
 		return EXIT_SUCCESS;
 	}
 	else {

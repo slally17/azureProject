@@ -136,6 +136,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="oscpack\ip\IpEndpointName.cpp" />
+    <ClCompile Include="oscpack\ip\NetworkingUtils.cpp" />
+    <ClCompile Include="oscpack\ip\UdpSocket.cpp" />
+    <ClCompile Include="oscpack\osc\OscOutboundPacketStream.cpp" />
+    <ClCompile Include="oscpack\osc\OscReceivedElements.cpp" />
+    <ClCompile Include="oscpack\osc\OscTypes.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BodyTrackingHelpers.h" />
@@ -143,6 +149,18 @@
     <ClInclude Include="modeOneFunctions.h" />
     <ClInclude Include="modeThreeFunctions.h" />
     <ClInclude Include="modeTwoFunctions.h" />
+    <ClInclude Include="oscpack\ip\IpEndpointName.h" />
+    <ClInclude Include="oscpack\ip\NetworkingUtils.h" />
+    <ClInclude Include="oscpack\ip\PacketListener.h" />
+    <ClInclude Include="oscpack\ip\TimerListener.h" />
+    <ClInclude Include="oscpack\ip\UdpSocket.h" />
+    <ClInclude Include="oscpack\osc\MessageMappingOscPacketListener.h" />
+    <ClInclude Include="oscpack\osc\OscException.h" />
+    <ClInclude Include="oscpack\osc\OscHostEndianness.h" />
+    <ClInclude Include="oscpack\osc\OscOutboundPacketStream.h" />
+    <ClInclude Include="oscpack\osc\OscPacketListener.h" />
+    <ClInclude Include="oscpack\osc\OscReceivedElements.h" />
+    <ClInclude Include="oscpack\osc\OscTypes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
