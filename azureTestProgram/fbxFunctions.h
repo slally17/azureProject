@@ -189,6 +189,21 @@ void createNodes(FbxScene* pScene, std::vector<FbxNode*> *nodes) {
 	nodes->push_back(pNodeHead);
 }
 
+void createMesh(FbxScene* pScene) {
+	// Create a node for our mesh in the scene.
+	FbxNode* lMeshNode = FbxNode::Create(pScene, "meshNode");
+
+	// Create a mesh.
+	FbxMesh* lMesh = FbxMesh::Create(pScene, "mesh");
+
+	// Set the node attribute of the mesh node.
+	lMeshNode->SetNodeAttribute(lMesh);
+
+	// Add the mesh node to the root node in the scene.
+	FbxNode *lRootNode = pScene->GetRootNode();
+	lRootNode->AddChild(lMeshNode);
+}
+
 void CreateScene(FbxManager *pSdkManager, FbxScene* pScene, std::vector<k4abt_skeleton_t> skeletons)
 {
 	//Create scene info
@@ -284,6 +299,9 @@ bool createFBX(std::vector<k4abt_skeleton_t> skeletons, const char* output_path)
 
 	//Create the scene.
 	CreateScene(lSdkManager, lScene, skeletons);
+
+	//Add a mesh to scene.
+	createMesh(lScene);
 
 	//Save scene
 	lResult = SaveScene(lSdkManager, lScene, output_path, -1, false);

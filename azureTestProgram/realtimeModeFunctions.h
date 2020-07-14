@@ -3,7 +3,7 @@
 #include "fbxFunctions.h"
 #include "windows.h"
 
-std::string modeTwoFunction(const char* output_path) {
+std::string realtimeModeFunction(const char* output_path) {
 	std::string errorMessage = "";
 	std::vector<k4abt_skeleton_t> skeletons;
 	uint32_t kinectCount = k4a_device_get_installed_count();

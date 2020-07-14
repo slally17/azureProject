@@ -14,7 +14,7 @@ bool check_depth_image_exists(k4a_capture_t capture)
 	}
 }
 
-std::string modeOneFunction(const char* input_path, const char* output_path) {
+std::string mkvModeFunction(const char* input_path, const char* output_path) {
 	std::vector<k4abt_skeleton_t> skeletons;
 	std::string errorMessage = "";
 
