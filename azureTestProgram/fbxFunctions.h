@@ -206,8 +206,8 @@ void createMesh(FbxScene* pScene) {
 	//Define vertices of plane
 	FbxVector4 vertex0(-50, 0, 50);
 	FbxVector4 vertex1(50, 0, 50);
-	FbxVector4 vertex2(50, 100, 50);
-	FbxVector4 vertex3(-50, 100, 50);
+	FbxVector4 vertex2(50, 0, -50);
+	FbxVector4 vertex3(-50, 0, -50);
 	FbxVector4 lNormalZPos(0, 0, 1);
 
 	//Initialize the control point array of the mesh.
@@ -245,6 +245,25 @@ void createMesh(FbxScene* pScene) {
 
 	// Finally, we set layer 0 of the mesh to the normal layer element.
 	lLayer->SetNormals(lLayerElementNormal);
+
+	//Create material
+	FbxSurfaceLambert* lMaterial = FbxSurfaceLambert::Create(pScene, "customMaterial");
+
+	//Add material to mesh node
+	lMeshNode->AddMaterial(lMaterial);
+
+	// Set material mapping.
+	FbxGeometryElementMaterial* lMaterialElement = lMesh->CreateElementMaterial();
+	lMaterialElement->SetMappingMode(FbxGeometryElement::eByPolygon);
+	lMaterialElement->SetReferenceMode(FbxGeometryElement::eIndexToDirect);
+
+	//Create polygons
+	lMesh->BeginPolygon(0); // Material index.
+	lMesh->AddPolygon(0);
+	lMesh->AddPolygon(3);
+	lMesh->AddPolygon(2);
+	lMesh->AddPolygon(1);
+	lMesh->EndPolygon();
 }
 
 void CreateScene(FbxManager *pSdkManager, FbxScene* pScene, std::vector<k4abt_skeleton_t> skeletons)
