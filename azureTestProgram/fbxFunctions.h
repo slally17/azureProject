@@ -202,6 +202,49 @@ void createMesh(FbxScene* pScene) {
 	// Add the mesh node to the root node in the scene.
 	FbxNode *lRootNode = pScene->GetRootNode();
 	lRootNode->AddChild(lMeshNode);
+
+	//Define vertices of plane
+	FbxVector4 vertex0(-50, 0, 50);
+	FbxVector4 vertex1(50, 0, 50);
+	FbxVector4 vertex2(50, 100, 50);
+	FbxVector4 vertex3(-50, 100, 50);
+	FbxVector4 lNormalZPos(0, 0, 1);
+
+	//Initialize the control point array of the mesh.
+	lMesh->InitControlPoints(4);
+	FbxVector4* lControlPoints = lMesh->GetControlPoints();
+
+	//Define control points of plane.
+	lControlPoints[0] = vertex0;
+	lControlPoints[1] = vertex1;
+	lControlPoints[2] = vertex2;
+	lControlPoints[3] = vertex3;
+
+	//Create layer 0
+	FbxLayer* lLayer = lMesh->GetLayer(0);
+	if (lLayer == NULL) {
+		lMesh->CreateLayer();
+		lLayer = lMesh->GetLayer(0);
+	}
+
+	// Create a normal layer.
+	FbxLayerElementNormal* lLayerElementNormal = FbxLayerElementNormal::Create(lMesh, "");
+
+	// Set its mapping mode to map each normal vector to each control point.
+	lLayerElementNormal->SetMappingMode(FbxLayerElement::eByControlPoint);
+
+	// Set the reference mode of so that the n'th element of the normal array maps to the n'th
+	// element of the control point array.
+	lLayerElementNormal->SetReferenceMode(FbxLayerElement::eDirect);
+
+	// Assign the normal vectors in the same order the control points were defined for the mesh.
+	lLayerElementNormal->GetDirectArray().Add(lNormalZPos);
+	lLayerElementNormal->GetDirectArray().Add(lNormalZPos);
+	lLayerElementNormal->GetDirectArray().Add(lNormalZPos);
+	lLayerElementNormal->GetDirectArray().Add(lNormalZPos);
+
+	// Finally, we set layer 0 of the mesh to the normal layer element.
+	lLayer->SetNormals(lLayerElementNormal);
 }
 
 void CreateScene(FbxManager *pSdkManager, FbxScene* pScene, std::vector<k4abt_skeleton_t> skeletons)

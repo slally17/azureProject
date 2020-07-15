@@ -146,9 +146,9 @@
   <ItemGroup>
     <ClInclude Include="BodyTrackingHelpers.h" />
     <ClInclude Include="fbxFunctions.h" />
-    <ClInclude Include="modeOneFunctions.h" />
-    <ClInclude Include="modeThreeFunctions.h" />
-    <ClInclude Include="modeTwoFunctions.h" />
+    <ClInclude Include="mkvModeFunctions.h" />
+    <ClInclude Include="streamModeFunctions.h" />
+    <ClInclude Include="realtimeModeFunctions.h" />
     <ClInclude Include="oscpack\ip\IpEndpointName.h" />
     <ClInclude Include="oscpack\ip\NetworkingUtils.h" />
     <ClInclude Include="oscpack\ip\PacketListener.h" />

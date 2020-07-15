@@ -13,3 +13,6 @@ x64/
 
 # Don't track .fbx files, they are the outputs
 *.fbx
+
+# Don't track .mkv files, they are the inputs
+*.mkv
