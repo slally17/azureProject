@@ -1,6 +1,7 @@
 #pragma once
 
 #include "fbxFunctions.h"
+#include "gltfFunctions.h"
 
 bool check_depth_image_exists(k4a_capture_t capture)
 {
@@ -14,7 +15,7 @@ bool check_depth_image_exists(k4a_capture_t capture)
 	}
 }
 
-std::string mkvModeFunction(const char* input_path, const char* output_path) {
+std::string mkvModeFunction(const char* input_path, const char* output_path, const char* output_type) {
 	std::vector<k4abt_skeleton_t> skeletons;
 	std::string errorMessage = "";
 
@@ -87,11 +88,25 @@ std::string mkvModeFunction(const char* input_path, const char* output_path) {
 
 	//Create FBX from skeletons vector
 	bool success = true;
-	if (true) { //Replace true with errorMessage == ""
-		success = createFBX(skeletons, output_path);
+	std::string outputType = output_type;
+	if (errorMessage == "") {
+		if (outputType == "-f") {
+			success = createFBX(skeletons, output_path);
+		}
+		else if (outputType == "-g") {
+			success = false;
+		}
+		else {
+			errorMessage += "Invalid output type. Use either -f or -g.\n";
+		}
 	}	
 	if (!success) {
-		errorMessage += "An error occurred while creating the fbx..\n";
+		if (outputType == "-f") {
+			errorMessage += "An error occurred while creating the fbx.\n";
+		}
+		else if (outputType == "-g") {
+			errorMessage += "An error occurred while creating the gltf.\n";
+		}
 	}
 
 	return errorMessage;

@@ -110,5 +110,8 @@
     <ClInclude Include="streamModeFunctions.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="gltfFunctions.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,15 +23,17 @@
 #include "realtimeModeFunctions.h"
 #include "streamModeFunctions.h"
 
-//Syntax: azureProgram.exe (input.mkv) (output.fbx)
+//Syntax: azureProgram.exe (input.mkv) (output.___) -outputType
 	//If an input and output are provided program runs in mkv mode
 	//If only an output is provided program runs in realtime mode
 	//If neither are provided program runs in stream mode
+	//outputType=f creates fbx output
+	//outputType=g creates gltf output
 
 //MKV Mode: Create skeletons from saved mkv file
 	//Step 1: Get mkv file
 	//Step 2: Convert mkv file to skeletons
-	//Step 3: Convert skeletons to fbx file
+	//Step 3: Convert skeletons to fbx or gltf file
 
 //Realtime Mode: Create skeletons from realtime recording
 	//Step 1: Initialize the kinect
@@ -40,7 +42,7 @@
 		//2B: Create skeletons from frame
 		//2C: Save skeletons data
 	//Step 3: End recording (Press space bar to stop recording)
-	//Step 4: Create fbx from skeleton data
+	//Step 4: Create fbx or gltf from skeleton data
 
 //Stream Mode: Stream Kinect skeletons to Unity
 	//Future planning
@@ -52,13 +54,13 @@ int main(int argc, char **argv)
 	char buffer[OUTPUT_BUFFER_SIZE];
 	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
 	
-	if (argc == 3) {
+	if (argc == 4) {
 		//Run mkv mode
-		errorMessage = mkvModeFunction(argv[1], argv[2]);
+		errorMessage = mkvModeFunction(argv[1], argv[2], argv[3]);
 	}
-	else if (argc == 2) {
+	else if (argc == 3) {
 		//Run realtime mode
-		errorMessage = realtimeModeFunction(argv[1]);
+		errorMessage = realtimeModeFunction(argv[1], argv[2]);
 	}
 	else if (argc == 1) {
 		//Run stream mode

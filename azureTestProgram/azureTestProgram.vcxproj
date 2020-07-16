@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="BodyTrackingHelpers.h" />
     <ClInclude Include="fbxFunctions.h" />
+    <ClInclude Include="gltfFunctions.h" />
     <ClInclude Include="mkvModeFunctions.h" />
     <ClInclude Include="streamModeFunctions.h" />
     <ClInclude Include="realtimeModeFunctions.h" />

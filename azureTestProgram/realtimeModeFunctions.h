@@ -1,9 +1,10 @@
 #pragma once
 
 #include "fbxFunctions.h"
+#include "gltfFunctions.h"
 #include "windows.h"
 
-std::string realtimeModeFunction(const char* output_path) {
+std::string realtimeModeFunction(const char* output_path, const char* output_type) {
 	std::string errorMessage = "";
 	std::vector<k4abt_skeleton_t> skeletons;
 	uint32_t kinectCount = k4a_device_get_installed_count();
@@ -19,7 +20,7 @@ std::string realtimeModeFunction(const char* output_path) {
 		k4a_device_configuration_t device_config = K4A_DEVICE_CONFIG_INIT_DISABLE_ALL;
 		device_config.camera_fps = K4A_FRAMES_PER_SECOND_30;
 		device_config.color_format = K4A_IMAGE_FORMAT_COLOR_MJPG;
-		device_config.color_resolution = K4A_COLOR_RESOLUTION_2160P;
+		device_config.color_resolution = K4A_COLOR_RESOLUTION_720P;
 		device_config.depth_mode = K4A_DEPTH_MODE_NFOV_UNBINNED;
 		k4a_calibration_t sensor_calibration;
 		if (errorMessage == "" && K4A_FAILED(k4a_device_get_calibration(device, device_config.depth_mode, K4A_COLOR_RESOLUTION_OFF, &sensor_calibration))) {
@@ -92,11 +93,25 @@ std::string realtimeModeFunction(const char* output_path) {
 
 		//Create FBX from skeletons vector
 		bool success = true;
+		std::string outputType = output_type;
 		if (errorMessage == "") {
-			success = createFBX(skeletons, output_path);
+			if (outputType == "-f") {
+				success = createFBX(skeletons, output_path);
+			}
+			else if (outputType == "-g") {
+				success = false;
+			}
+			else {
+				errorMessage += "Invalid output type. Use either -f or -g.\n";
+			}
 		}
 		if (!success) {
-			errorMessage += "An error occurred while creating the fbx..\n";
+			if (outputType == "-f") {
+				errorMessage += "An error occurred while creating the fbx.\n";
+			}
+			else if (outputType == "-g") {
+				errorMessage += "An error occurred while creating the gltf.\n";
+			}
 		}
 	}
 	else if (kinectCount == 0) { //End program if Kinect isn't found
