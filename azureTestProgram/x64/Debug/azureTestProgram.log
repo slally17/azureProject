@@ -14,4 +14,11 @@ f:\onedrive - virginia tech\classes\2020 summer\zach project\azureproject\azuret
           [
               T=fbxsdk::FbxDouble
           ]
+  IpEndpointName.cpp
+  NetworkingUtils.cpp
+  UdpSocket.cpp
+  OscOutboundPacketStream.cpp
+  OscReceivedElements.cpp
+  OscTypes.cpp
+  Generating Code...
   azureTestProgram.vcxproj -> F:\OneDrive - Virginia Tech\Classes\2020 Summer\Zach Project\azureProject\x64\Debug\azureTestProgram.exe

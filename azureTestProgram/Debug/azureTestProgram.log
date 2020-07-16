@@ -1,2 +1,0 @@
-﻿main.obj : error LNK2019: unresolved external symbol _k4abt_tracker_create referenced in function "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl modeOneFunction(char const *,char const *)" (?modeOneFunction@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBD0@Z)
-F:\OneDrive - Virginia Tech\Classes\2020 Summer\Zach Project\azureProject\Debug\azureTestProgram.exe : fatal error LNK1120: 1 unresolved externals
