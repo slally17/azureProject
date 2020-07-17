@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BodyTrackingHelpers.h" />
+    <ClInclude Include="checkerFunctions.h" />
     <ClInclude Include="fbxFunctions.h" />
     <ClInclude Include="gltfFunctions.h" />
     <ClInclude Include="mkvModeFunctions.h" />

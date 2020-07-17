@@ -1,14 +1,4 @@
-#include <iostream>
-#include <fstream>
 #include <string>
-#include <vector>
-
-#include <k4a/k4a.h>
-#include <k4arecord/record.h>
-#include <k4arecord/playback.h>
-#include <k4abt.h>
-
-#include <fbxsdk.h>
 
 #include "oscpack/osc/OscOutboundPacketStream.h"
 #include "oscpack/ip/UdpSocket.h"
@@ -72,16 +62,14 @@ int main(int argc, char **argv)
 	}
 
 	if (errorMessage == "") {
-		//Send osc message when program is complete
-		
+		//Send osc message when program is complete		
 		if (argc == 3) {
 			p << osc::BeginBundleImmediate << osc::BeginMessage("Fbx Created") << 1 << osc::EndMessage << osc::EndBundle;
 		}
 		else if (argc == 2) {
 			p << osc::BeginBundleImmediate << osc::BeginMessage("Fbx Created") << 2 << osc::EndMessage << osc::EndBundle;
 		}
-		transmitSocket.Send(p.Data(), p.Size());
-		
+		transmitSocket.Send(p.Data(), p.Size());		
 
 		return EXIT_SUCCESS;
 	}

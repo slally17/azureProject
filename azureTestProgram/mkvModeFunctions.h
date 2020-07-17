@@ -1,23 +1,25 @@
 #pragma once
 
+#include <k4a/k4a.h>
+#include <k4arecord/record.h>
+#include <k4arecord/playback.h>
+#include <k4abt.h>
+
 #include "fbxFunctions.h"
 #include "gltfFunctions.h"
+#include "checkerFunctions.h"
 
-bool check_depth_image_exists(k4a_capture_t capture)
-{
-	k4a_image_t depth = k4a_capture_get_depth_image(capture);
-	if (depth != nullptr) {
-		k4a_image_release(depth);
-		return true;
-	}
-	else {
-		return false;
-	}
-}
+#include <string>
+#include <vector>
 
 std::string mkvModeFunction(const char* input_path, const char* output_path, const char* output_type) {
 	std::vector<k4abt_skeleton_t> skeletons;
 	std::string errorMessage = "";
+
+	//Check output file existence
+	if (fileExists(output_path)) {
+		errorMessage += "Output file already exists, please choose another name.\n";
+	}
 
 	//Find the mkv file and check that it exists
 	k4a_playback_t playback_handle = nullptr;
@@ -94,7 +96,7 @@ std::string mkvModeFunction(const char* input_path, const char* output_path, con
 			success = createFBX(skeletons, output_path);
 		}
 		else if (outputType == "-g") {
-			success = false;
+			success = createGLTF(skeletons, output_path);
 		}
 		else {
 			errorMessage += "Invalid output type. Use either -f or -g.\n";

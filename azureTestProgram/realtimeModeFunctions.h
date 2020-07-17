@@ -1,13 +1,27 @@
 #pragma once
 
+#include <k4a/k4a.h>
+#include <k4arecord/record.h>
+#include <k4arecord/playback.h>
+#include <k4abt.h>
+
 #include "fbxFunctions.h"
 #include "gltfFunctions.h"
+#include "checkerFunctions.h"
 #include "windows.h"
+
+#include <string>
+#include <vector>
 
 std::string realtimeModeFunction(const char* output_path, const char* output_type) {
 	std::string errorMessage = "";
 	std::vector<k4abt_skeleton_t> skeletons;
 	uint32_t kinectCount = k4a_device_get_installed_count();
+
+	//Check output file existence
+	if (fileExists(output_path)) {
+		errorMessage += "Output file already exists, please choose another name.\n";
+	}
 
 	if (kinectCount == 1) { //Run program if Kinect is found
 		//Connect to the Kinect
@@ -99,7 +113,7 @@ std::string realtimeModeFunction(const char* output_path, const char* output_typ
 				success = createFBX(skeletons, output_path);
 			}
 			else if (outputType == "-g") {
-				success = false;
+				success = createGLTF(skeletons, output_path);
 			}
 			else {
 				errorMessage += "Invalid output type. Use either -f or -g.\n";

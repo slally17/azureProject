@@ -1,6 +1,9 @@
 #pragma once
 
+#include <fbxsdk.h>
+
 #include <vector>
+#include <iostream>
 
 #ifdef IOS_REF
 	#undef  IOS_REF
@@ -105,9 +108,11 @@ bool SaveScene(FbxManager* pManager, FbxDocument* pScene, const char* pFilename,
 
 void createNodes(FbxScene* pScene, std::vector<FbxNode*> *nodes) {
 	FbxNode* lRootNode = pScene->GetRootNode();
+	FbxNode* pSkeleton = FbxNode::Create(pScene, "Skeleton");
+	lRootNode->AddChild(pSkeleton);
 
 	FbxNode* pNodePelvis = FbxNode::Create(pScene, "Pelvis");
-	lRootNode->AddChild(pNodePelvis);
+	pSkeleton->AddChild(pNodePelvis);
 	nodes->push_back(pNodePelvis);
 	FbxNode* pNodeSpineNaval = FbxNode::Create(pScene, "Spine_Naval");
 	pNodePelvis->AddChild(pNodeSpineNaval);
@@ -322,12 +327,14 @@ void CreateScene(FbxManager *pSdkManager, FbxScene* pScene, std::vector<k4abt_sk
 				FbxAnimCurveDef::eInterpolationLinear);
 
 			//Set y-axis position
-			position = skeletons[j].joints[i].position.xyz.y;
+			position = -1 * skeletons[j].joints[i].position.xyz.y;
+			if(j == 0)
+				std::cout << i << ": " << position << std::endl;
 			if (nodes[i]->GetParent()) {
 				offset = nodes[i]->GetParent()->EvaluateGlobalTransform(lTime).GetT()[1];
 				position -= offset;
-				position *= -1; //Flip the skeleton vertically
-			}
+				//position *= -1; //Flip the skeleton vertically
+			}			
 			lKeyIndex = yTranCurve->KeyAdd(lTime);
 			yTranCurve->KeySet(lKeyIndex, lTime,
 				position,
