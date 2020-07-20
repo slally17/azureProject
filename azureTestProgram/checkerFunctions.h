@@ -6,6 +6,7 @@
 #include <k4abt.h>
 
 #include <fstream>
+#include <sstream>
 
 bool check_depth_image_exists(k4a_capture_t capture)
 {
@@ -26,4 +27,26 @@ bool fileExists(const char* output_path) {
 		result = false;
 	}
 	return result;
+}
+
+bool outputFBX(std::string outputPath) {
+	std::stringstream fullFileName(outputPath);
+	std::string fileName, fileExtension;
+	std::getline(fullFileName, fileName, '.');
+	std::getline(fullFileName, fileExtension);
+	if (fileExtension == "fbx") {
+		return true;
+	}
+	return false;
+}
+
+bool outputGLTF(std::string outputPath) {
+	std::stringstream fullFileName(outputPath);
+	std::string fileName, fileExtension;
+	std::getline(fullFileName, fileName, '.');
+	std::getline(fullFileName, fileExtension);
+	if (fileExtension == "gltf") {
+		return true;
+	}
+	return false;
 }

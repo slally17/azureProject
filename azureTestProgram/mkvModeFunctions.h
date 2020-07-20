@@ -12,7 +12,7 @@
 #include <string>
 #include <vector>
 
-std::string mkvModeFunction(const char* input_path, const char* output_path, const char* output_type) {
+std::string mkvModeFunction(const char* input_path, const char* output_path) {
 	std::vector<k4abt_skeleton_t> skeletons;
 	std::string errorMessage = "";
 
@@ -88,25 +88,24 @@ std::string mkvModeFunction(const char* input_path, const char* output_path, con
 	k4abt_tracker_destroy(tracker);
 	k4a_playback_close(playback_handle);
 
-	//Create FBX from skeletons vector
+	//Create FBX or GLTF from skeletons vector
 	bool success = true;
-	std::string outputType = output_type;
 	if (errorMessage == "") {
-		if (outputType == "-f") {
+		if (outputFBX(output_path)) {
 			success = createFBX(skeletons, output_path);
 		}
-		else if (outputType == "-g") {
+		else if (outputGLTF(output_path)) {
 			success = createGLTF(skeletons, output_path);
 		}
 		else {
 			errorMessage += "Invalid output type. Use either -f or -g.\n";
 		}
-	}	
+	}
 	if (!success) {
-		if (outputType == "-f") {
+		if (outputFBX(output_path)) {
 			errorMessage += "An error occurred while creating the fbx.\n";
 		}
-		else if (outputType == "-g") {
+		else if (outputGLTF(output_path)) {
 			errorMessage += "An error occurred while creating the gltf.\n";
 		}
 	}

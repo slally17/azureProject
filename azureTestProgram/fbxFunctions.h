@@ -328,8 +328,6 @@ void CreateScene(FbxManager *pSdkManager, FbxScene* pScene, std::vector<k4abt_sk
 
 			//Set y-axis position
 			position = -1 * skeletons[j].joints[i].position.xyz.y;
-			if(j == 0)
-				std::cout << i << ": " << position << std::endl;
 			if (nodes[i]->GetParent()) {
 				offset = nodes[i]->GetParent()->EvaluateGlobalTransform(lTime).GetT()[1];
 				position -= offset;

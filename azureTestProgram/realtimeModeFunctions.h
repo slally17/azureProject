@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 
-std::string realtimeModeFunction(const char* output_path, const char* output_type) {
+std::string realtimeModeFunction(const char* output_path) {
 	std::string errorMessage = "";
 	std::vector<k4abt_skeleton_t> skeletons;
 	uint32_t kinectCount = k4a_device_get_installed_count();
@@ -105,14 +105,13 @@ std::string realtimeModeFunction(const char* output_path, const char* output_typ
 		k4a_device_stop_cameras(device);
 		k4a_device_close(device);
 
-		//Create FBX from skeletons vector
+		//Create FBX or GLTF from skeletons vector
 		bool success = true;
-		std::string outputType = output_type;
 		if (errorMessage == "") {
-			if (outputType == "-f") {
+			if (outputFBX(output_path)) {
 				success = createFBX(skeletons, output_path);
 			}
-			else if (outputType == "-g") {
+			else if (outputGLTF(output_path)) {
 				success = createGLTF(skeletons, output_path);
 			}
 			else {
@@ -120,10 +119,10 @@ std::string realtimeModeFunction(const char* output_path, const char* output_typ
 			}
 		}
 		if (!success) {
-			if (outputType == "-f") {
+			if (outputFBX(output_path)) {
 				errorMessage += "An error occurred while creating the fbx.\n";
 			}
-			else if (outputType == "-g") {
+			else if (outputGLTF(output_path)) {
 				errorMessage += "An error occurred while creating the gltf.\n";
 			}
 		}

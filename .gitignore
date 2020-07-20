@@ -11,8 +11,12 @@ packages/
 # The x64 build file doesn't need to be uploaded, it will be remade
 x64/
 
-# Don't track .fbx files, they are the outputs
+# Don't track .fbx files, they are outputs
 *.fbx
+
+# Don't track .gltf and .bin files, they are outputs
+*.gltf
+*.bin
 
 # Don't track .mkv files, they are the inputs
 *.mkv

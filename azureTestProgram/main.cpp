@@ -13,12 +13,10 @@
 #include "realtimeModeFunctions.h"
 #include "streamModeFunctions.h"
 
-//Syntax: azureProgram.exe (input.mkv) (output.___) -outputType
+//Syntax: azureProgram.exe (input.mkv) (output.___)
 	//If an input and output are provided program runs in mkv mode
 	//If only an output is provided program runs in realtime mode
 	//If neither are provided program runs in stream mode
-	//outputType=f creates fbx output
-	//outputType=g creates gltf output
 
 //MKV Mode: Create skeletons from saved mkv file
 	//Step 1: Get mkv file
@@ -44,13 +42,13 @@ int main(int argc, char **argv)
 	char buffer[OUTPUT_BUFFER_SIZE];
 	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
 	
-	if (argc == 4) {
+	if (argc == 3) {
 		//Run mkv mode
-		errorMessage = mkvModeFunction(argv[1], argv[2], argv[3]);
+		errorMessage = mkvModeFunction(argv[1], argv[2]);
 	}
-	else if (argc == 3) {
+	else if (argc == 2) {
 		//Run realtime mode
-		errorMessage = realtimeModeFunction(argv[1], argv[2]);
+		errorMessage = realtimeModeFunction(argv[1]);
 	}
 	else if (argc == 1) {
 		//Run stream mode
