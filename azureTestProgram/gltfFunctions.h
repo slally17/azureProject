@@ -75,7 +75,7 @@ namespace {
 
 		//Create buffer views for animation node data
 		bufferBuilder.AddBufferView(BufferViewTarget::ARRAY_BUFFER);
-		std::vector<float> positions[27] = {};
+		std::vector<float> positions[27];
 		addPositionData(skeletons, positions);
 		std::vector<float> minValues[27]; 
 		std::vector<float> maxValues[27]; 
@@ -103,27 +103,29 @@ namespace {
 		std::string skeletonId[27];
 		for (int i = 0; i < 27; i++) {
 			skeletonId[i] = document.nodes.Append(std::move(skeleton[i]), AppendIdPolicy::GenerateOnEmpty).id;
-		}
+		}		
 
 		AnimationSampler skeletonAnimationSampler[27];
 		AnimationTarget skeletonAnimationTarget[27];
 		AnimationChannel skeletonAnimationChannel[27];
 		Animation skeletonAnimation[27];
-		for (int i = 0; i > 27; i++) {
+		std::string skeletonAnimationSamplerId[27];
+		for (int i = 0; i < 27; i++) {
 			skeletonAnimationSampler[i].inputAccessorId = accessorIdTime;
 			skeletonAnimationSampler[i].outputAccessorId = accessorIdPositions[i];
+			skeletonAnimationSamplerId[i] = skeletonAnimation[i].samplers.Append(std::move(skeletonAnimationSampler[i]), AppendIdPolicy::GenerateOnEmpty).id;
 			skeletonAnimationTarget[i].nodeId = skeletonId[i];
 			skeletonAnimationTarget[i].path = TARGET_TRANSLATION;
-			skeletonAnimationChannel[i].samplerId = skeletonAnimationSampler[i].id;
-			skeletonAnimationChannel[i].target = skeletonAnimationTarget[i];
-			skeletonAnimation[i].samplers.Append(std::move(skeletonAnimationSampler[i]), AppendIdPolicy::GenerateOnEmpty);
+			skeletonAnimationChannel[i].samplerId = skeletonAnimationSamplerId[i];
+			skeletonAnimationChannel[i].target = skeletonAnimationTarget[i];			
 			skeletonAnimation[i].channels.Append(std::move(skeletonAnimationChannel[i]), AppendIdPolicy::GenerateOnEmpty);
+			document.animations.Append(std::move(skeletonAnimation[i]), AppendIdPolicy::GenerateOnEmpty); 
 		}
 
 		Scene scene;
 		for (int i = 0; i < 27; i++) {
 			scene.nodes.push_back(skeletonId[i]);
-		}		
+		}
 		document.SetDefaultScene(std::move(scene), AppendIdPolicy::GenerateOnEmpty);
 	}	
 
@@ -163,9 +165,9 @@ namespace {
 			manifest = Serialize(document, SerializeFlags::Pretty);
 		}
 		catch (const GLTFException& ex) {
+			std::cout << ex.what() << std::endl;
 			result = false;
 		}
-
 
 		//Write the JSON manifest to file
 		auto& gltfResourceWriter = bufferBuilder.GetResourceWriter();
