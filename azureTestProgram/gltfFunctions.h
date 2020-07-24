@@ -9,6 +9,7 @@
 
 #include <experimental/filesystem>
 #include <fstream>
+#include <sstream>
 #include <vector>
 
 using namespace Microsoft::glTF;
@@ -60,9 +61,9 @@ namespace {
 		}
 	}
 
-	void CreateSkeletonResources(std::vector<k4abt_skeleton_t> skeletons, Document& document, BufferBuilder& bufferBuilder, std::string& accessorIdTime, std::string accessorIdPositions[27]) {
+	void CreateSkeletonResources(std::vector<k4abt_skeleton_t> skeletons, std::string fileName, Document& document, BufferBuilder& bufferBuilder, std::string& accessorIdTime, std::string accessorIdPositions[27]) {
 		//Create buffer to store all resource data
-		const char* bufferId = nullptr;
+		const char* bufferId = fileName.c_str();
 		bufferBuilder.AddBuffer(bufferId);
 
 		//Create buffer view for keyframe times
@@ -129,8 +130,17 @@ namespace {
 		document.SetDefaultScene(std::move(scene), AppendIdPolicy::GenerateOnEmpty);
 	}	
 
+	std::string getFileName(std::string outputPath) {
+		std::stringstream fullFileName(outputPath);
+		std::string fileName;
+		std::getline(fullFileName, fileName, '.');		
+		
+		return fileName;
+	}
+
 	bool createGLTF(std::vector<k4abt_skeleton_t> skeletons, const char* output_path) {
 		bool result = true;
+		std::string fileName = getFileName(output_path);
 
 		//Convert output_path to absolute path
 		std::experimental::filesystem::path path = output_path;
@@ -156,7 +166,7 @@ namespace {
 		BufferBuilder bufferBuilder(std::move(resourceWriter));
 
 		//Create gltf assets
-		CreateSkeletonResources(skeletons, document, bufferBuilder, accessorIdTime, accessorIdPositions);
+		CreateSkeletonResources(skeletons, fileName, document, bufferBuilder, accessorIdTime, accessorIdPositions);
 		CreateSkeletonEntities(document, accessorIdTime, accessorIdPositions);
 
 		// Serialize the glTF Document into a JSON manifest
