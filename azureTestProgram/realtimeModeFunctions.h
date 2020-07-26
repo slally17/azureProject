@@ -105,11 +105,9 @@ std::string realtimeModeFunction(const char* output_path) {
 		k4a_device_stop_cameras(device);
 		k4a_device_close(device);
 
-		//Check if output path exists
+		//Create output path
 		std::experimental::filesystem::path path = output_path;
-		if (!exists(path.parent_path())) {
-			errorMessage += "Output path does not exist. \n";
-		}
+		CreateDirectory(path.parent_path().string().c_str(), NULL);
 
 		//Create FBX or GLTF from skeletons vector
 		bool success = true;

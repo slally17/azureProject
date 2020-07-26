@@ -8,6 +8,8 @@
 #include "fbxFunctions.h"
 #include "gltfFunctions.h"
 #include "checkerFunctions.h"
+#include "windows.h"
+#include "fileapi.h"
 
 #include <string>
 #include <vector>
@@ -88,11 +90,9 @@ std::string mkvModeFunction(const char* input_path, const char* output_path) {
 	k4abt_tracker_destroy(tracker);
 	k4a_playback_close(playback_handle);
 
-	//Check if output path exists
+	//Create output path
 	std::experimental::filesystem::path path = output_path;
-	if (!exists(path.parent_path())) {
-		errorMessage += "Output path does not exist. \n";
-	}
+	CreateDirectory(path.parent_path().string().c_str(), NULL);
 
 	//Create FBX or GLTF from skeletons vector
 	bool success = true;

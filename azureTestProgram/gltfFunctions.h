@@ -62,6 +62,7 @@ namespace {
 	}
 
 	void CreateSkeletonResources(std::vector<k4abt_skeleton_t> skeletons, std::string fileName, Document& document, BufferBuilder& bufferBuilder, std::string& accessorIdTime, std::string accessorIdPositions[27]) {
+		std::cout << "test" << std::endl;
 		//Create buffer to store all resource data
 		const char* bufferId = fileName.c_str();
 		bufferBuilder.AddBuffer(bufferId);
@@ -130,20 +131,12 @@ namespace {
 		document.SetDefaultScene(std::move(scene), AppendIdPolicy::GenerateOnEmpty);
 	}	
 
-	std::string getFileName(std::string outputPath) {
-		std::stringstream fullFileName(outputPath);
-		std::string fileName;
-		std::getline(fullFileName, fileName, '.');		
-		
-		return fileName;
-	}
-
 	bool createGLTF(std::vector<k4abt_skeleton_t> skeletons, const char* output_path) {
 		bool result = true;
-		std::string fileName = getFileName(output_path);
 
 		//Convert output_path to absolute path
 		std::experimental::filesystem::path path = output_path;
+		std::string fileName = path.stem().string();
 		if (path.is_relative())	{
 			auto pathCurrent = std::experimental::filesystem::current_path();
 
