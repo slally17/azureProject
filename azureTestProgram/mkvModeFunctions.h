@@ -88,6 +88,12 @@ std::string mkvModeFunction(const char* input_path, const char* output_path) {
 	k4abt_tracker_destroy(tracker);
 	k4a_playback_close(playback_handle);
 
+	//Check if output path exists
+	std::experimental::filesystem::path path = output_path;
+	if (!exists(path.parent_path())) {
+		errorMessage += "Output path does not exist. \n";
+	}
+
 	//Create FBX or GLTF from skeletons vector
 	bool success = true;
 	if (errorMessage == "") {
