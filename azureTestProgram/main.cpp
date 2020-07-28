@@ -60,18 +60,17 @@ int main(int argc, char **argv)
 	}
 
 	if (errorMessage == "") {
-		//Send osc message when program is complete		
-		if (argc == 3) {
-			p << osc::BeginBundleImmediate << osc::BeginMessage("Fbx Created") << 1 << osc::EndMessage << osc::EndBundle;
-		}
-		else if (argc == 2) {
-			p << osc::BeginBundleImmediate << osc::BeginMessage("Fbx Created") << 2 << osc::EndMessage << osc::EndBundle;
-		}
+		//Send osc message to say program completed		
+		p << osc::BeginBundleImmediate << osc::BeginMessage("Program Complete") << 1 << osc::EndMessage << osc::EndBundle;
 		transmitSocket.Send(p.Data(), p.Size());		
 
 		return EXIT_SUCCESS;
 	}
 	else {
+		//Send osc message to say program failed
+		p << osc::BeginBundleImmediate << osc::BeginMessage("Program Complete") << 0 << osc::EndMessage << osc::EndBundle;
+		transmitSocket.Send(p.Data(), p.Size());
+
 		std::cout << errorMessage << std::endl;
 		return EXIT_FAILURE;
 	}	
