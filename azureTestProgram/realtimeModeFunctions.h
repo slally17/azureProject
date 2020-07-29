@@ -12,6 +12,34 @@
 
 #include <string>
 #include <vector>
+#include <thread>
+#include <mutex>
+
+std::mutex oscMutex;
+bool endRecording = false;
+
+class CustomPacketListener : public osc::OscPacketListener {
+protected:
+
+	virtual void ProcessMessage(const osc::ReceivedMessage& m,
+		const IpEndpointName& remoteEndpoint)
+	{
+		(void)remoteEndpoint; // suppress unused parameter warning		
+		if (std::strcmp(m.AddressPattern(), "/End Recording/") == 0) {
+			oscMutex.lock();
+			endRecording = true;
+			oscMutex.unlock();
+		}
+	}
+};
+
+void ListenerThread() {
+	CustomPacketListener listener;
+	UdpListeningReceiveSocket s(
+		IpEndpointName(IpEndpointName::ANY_ADDRESS, PORT),
+		&listener);
+	s.Run();
+}
 
 std::string realtimeModeFunction(const char* output_path) {
 	std::string errorMessage = "";
@@ -23,7 +51,7 @@ std::string realtimeModeFunction(const char* output_path) {
 		errorMessage += "Output file already exists, please choose another name.\n";
 	}
 
-	if (kinectCount == 1) { //Run program if Kinect is found
+	if (kinectCount == 1 && errorMessage == "") { //Run program if Kinect is found
 		//Connect to the Kinect
 		k4a_device_t device = NULL;
 		if (K4A_FAILED(k4a_device_open(K4A_DEVICE_DEFAULT, &device))) {
@@ -54,6 +82,12 @@ std::string realtimeModeFunction(const char* output_path) {
 			k4a_device_close(device);
 		}
 
+		//Start thread for receiving end recording message
+		std::thread lt;
+		if (errorMessage == "") {
+			lt = std::thread(ListenerThread);
+		}		
+
 		//Process Kinect recording data
 		int runTime = 0;
 		bool running = true;
@@ -65,6 +99,13 @@ std::string realtimeModeFunction(const char* output_path) {
 			if (GetAsyncKeyState(VK_SPACE)) { 
 				running = false;
 			}
+
+			//Check endRecording global variable
+			oscMutex.lock();
+			if (endRecording) {
+				running = false;
+			}
+			oscMutex.unlock();
 
 			//Get current frame
 			k4a_capture_t sensor_capture;
@@ -134,7 +175,7 @@ std::string realtimeModeFunction(const char* output_path) {
 	else if (kinectCount == 0) { //End program if Kinect isn't found
 		errorMessage += "Kinect can't be found by program, please try reconnecting.\n";
 	}
-	else { //End program if multiple Kinects are found
+	else if(errorMessage == "") { //End program if multiple Kinects are found
 		errorMessage += "Multiple Kinects, detected. Please unplug additional ones.\n";
 	}
 

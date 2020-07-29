@@ -62,7 +62,6 @@ namespace {
 	}
 
 	void CreateSkeletonResources(std::vector<k4abt_skeleton_t> skeletons, std::string fileName, Document& document, BufferBuilder& bufferBuilder, std::string& accessorIdTime, std::string accessorIdPositions[27]) {
-		std::cout << "test" << std::endl;
 		//Create buffer to store all resource data
 		const char* bufferId = fileName.c_str();
 		bufferBuilder.AddBuffer(bufferId);
@@ -144,8 +143,6 @@ namespace {
 			pathCurrent /= path;
 			pathCurrent.swap(path);
 		}
-
-		std::cout << path << std::endl;
 
 		//Create file writers
 		auto streamWriter = std::make_unique<StreamWriter>(path.parent_path());
