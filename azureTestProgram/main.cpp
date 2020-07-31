@@ -47,6 +47,9 @@ int main(int argc, char **argv)
 		errorMessage = mkvModeFunction(argv[1], argv[2]);
 	}
 	else if (argc == 2) {
+		//Start thread for receiving end recording message
+		std::thread lt = std::thread(ListenerThread);
+
 		//Run realtime mode
 		errorMessage = realtimeModeFunction(argv[1]);
 	}

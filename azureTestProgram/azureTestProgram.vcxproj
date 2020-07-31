@@ -155,6 +155,7 @@
     <ClInclude Include="fbxFunctions.h" />
     <ClInclude Include="gltfFunctions.h" />
     <ClInclude Include="mkvModeFunctions.h" />
+    <ClInclude Include="oscFunctions.h" />
     <ClInclude Include="streamModeFunctions.h" />
     <ClInclude Include="realtimeModeFunctions.h" />
     <ClInclude Include="oscpack\ip\IpEndpointName.h" />

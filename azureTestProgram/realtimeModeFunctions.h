@@ -9,37 +9,10 @@
 #include "gltfFunctions.h"
 #include "checkerFunctions.h"
 #include "windows.h"
+#include "oscFunctions.h"
 
 #include <string>
 #include <vector>
-#include <thread>
-#include <mutex>
-
-std::mutex oscMutex;
-bool endRecording = false;
-
-class CustomPacketListener : public osc::OscPacketListener {
-protected:
-
-	virtual void ProcessMessage(const osc::ReceivedMessage& m,
-		const IpEndpointName& remoteEndpoint)
-	{
-		(void)remoteEndpoint; // suppress unused parameter warning		
-		if (std::strcmp(m.AddressPattern(), "/End Recording/") == 0) {
-			oscMutex.lock();
-			endRecording = true;
-			oscMutex.unlock();
-		}
-	}
-};
-
-void ListenerThread() {
-	CustomPacketListener listener;
-	UdpListeningReceiveSocket s(
-		IpEndpointName(IpEndpointName::ANY_ADDRESS, PORT),
-		&listener);
-	s.Run();
-}
 
 std::string realtimeModeFunction(const char* output_path) {
 	std::string errorMessage = "";
@@ -80,12 +53,6 @@ std::string realtimeModeFunction(const char* output_path) {
 		if (errorMessage == "" && K4A_FAILED(k4a_device_start_cameras(device, &device_config))) {
 			errorMessage += "Kinect camera failed to start, please try reconnecting.\n";
 			k4a_device_close(device);
-		}
-
-		//Start thread for receiving end recording message
-		std::thread lt;
-		if (errorMessage == "") {
-			lt = std::thread(ListenerThread);
 		}		
 
 		//Process Kinect recording data
