@@ -24,7 +24,7 @@ protected:
 void ListenerThread() {
 	CustomPacketListener listener;
 	UdpListeningReceiveSocket s(
-		IpEndpointName(IpEndpointName::ANY_ADDRESS, PORT),
+		IpEndpointName(IpEndpointName::ANY_ADDRESS, INPUT_PORT),
 		&listener);
 	s.Run();
 }

@@ -6,7 +6,8 @@
 #include "oscpack/osc/OscPacketListener.h"
 
 #define ADDRESS "127.0.0.1"
-#define PORT 7000
+#define OUTPUT_PORT 7000
+#define INPUT_PORT 7001
 #define OUTPUT_BUFFER_SIZE 1024
 
 #include "mkvModeFunctions.h"
@@ -38,7 +39,7 @@
 int main(int argc, char **argv) 
 {	
 	std::string errorMessage = "";
-	UdpTransmitSocket transmitSocket(IpEndpointName(ADDRESS, PORT));
+	UdpTransmitSocket transmitSocket(IpEndpointName(ADDRESS, OUTPUT_PORT));
 	char buffer[OUTPUT_BUFFER_SIZE];
 	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
 	
@@ -64,14 +65,14 @@ int main(int argc, char **argv)
 
 	if (errorMessage == "") {
 		//Send osc message to say program completed		
-		p << osc::BeginBundleImmediate << osc::BeginMessage("Program Complete") << 1 << osc::EndMessage << osc::EndBundle;
+		p << osc::BeginBundleImmediate << osc::BeginMessage("/Program Complete/") << 1 << osc::EndMessage << osc::EndBundle;
 		transmitSocket.Send(p.Data(), p.Size());		
 
 		return EXIT_SUCCESS;
 	}
 	else {
 		//Send osc message to say program failed
-		p << osc::BeginBundleImmediate << osc::BeginMessage("Program Complete") << 0 << osc::EndMessage << osc::EndBundle;
+		p << osc::BeginBundleImmediate << osc::BeginMessage("/Program Complete/") << 0 << osc::EndMessage << osc::EndBundle;
 		transmitSocket.Send(p.Data(), p.Size());
 
 		std::cout << errorMessage << std::endl;
