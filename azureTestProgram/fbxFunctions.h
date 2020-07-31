@@ -42,7 +42,7 @@ void DestroySdkObjects(FbxManager* pManager, bool pExitStatus)
 {
 	//Delete the FBX Manager. All the objects that have been allocated using the FBX Manager and that haven't been explicitly destroyed are also automatically destroyed.
 	if (pManager) pManager->Destroy();
-	if (pExitStatus) FBXSDK_printf("Program Success!\n");
+	//if (pExitStatus) FBXSDK_printf("Program Success!\n");
 }
 
 bool SaveScene(FbxManager* pManager, FbxDocument* pScene, const char* pFilename, int pFileFormat, bool pEmbedMedia)

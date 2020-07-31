@@ -21,7 +21,7 @@ protected:
 	}
 };
 
-void ListenerThread() {
+static void ListenerThread() {
 	CustomPacketListener listener;
 	UdpListeningReceiveSocket s(
 		IpEndpointName(IpEndpointName::ANY_ADDRESS, INPUT_PORT),

@@ -172,10 +172,6 @@ namespace {
 		//Write the JSON manifest to file
 		auto& gltfResourceWriter = bufferBuilder.GetResourceWriter();
 		gltfResourceWriter.WriteExternal(pathFile.u8string(), manifest.c_str(), manifest.length());
-		
-		if (result) {
-			std::cout << "Program Success!\n";
-		}
 
 		return result;
 	}

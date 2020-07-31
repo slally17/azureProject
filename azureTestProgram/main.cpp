@@ -53,6 +53,8 @@ int main(int argc, char **argv)
 
 		//Run realtime mode
 		errorMessage = realtimeModeFunction(argv[1]);
+
+		lt.detach();
 	}
 	else if (argc == 1) {
 		//Run stream mode
@@ -66,7 +68,9 @@ int main(int argc, char **argv)
 	if (errorMessage == "") {
 		//Send osc message to say program completed		
 		p << osc::BeginBundleImmediate << osc::BeginMessage("/Program Complete/") << 1 << osc::EndMessage << osc::EndBundle;
-		transmitSocket.Send(p.Data(), p.Size());		
+		transmitSocket.Send(p.Data(), p.Size());	
+
+		std::cout << "Program Success!" << std::endl;
 
 		return EXIT_SUCCESS;
 	}
