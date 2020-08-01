@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 
 	if (errorMessage == "") {
 		//Send osc message to say program completed		
-		p << osc::BeginBundleImmediate << osc::BeginMessage("/Program Complete/") << 1 << osc::EndMessage << osc::EndBundle;
+		p << osc::BeginBundleImmediate << osc::BeginMessage("/Program Complete/") << 1 << " " << osc::EndMessage << osc::EndBundle;
 		transmitSocket.Send(p.Data(), p.Size());	
 
 		std::cout << "Program Success!" << std::endl;
@@ -76,7 +76,7 @@ int main(int argc, char **argv)
 	}
 	else {
 		//Send osc message to say program failed
-		p << osc::BeginBundleImmediate << osc::BeginMessage("/Program Complete/") << 0 << osc::EndMessage << osc::EndBundle;
+		p << osc::BeginBundleImmediate << osc::BeginMessage("/Program Complete/") << 0 << errorMessage.c_str() << osc::EndMessage << osc::EndBundle;
 		transmitSocket.Send(p.Data(), p.Size());
 
 		std::cout << errorMessage << std::endl;
