@@ -5,11 +5,6 @@
 #include "oscpack/osc/OscReceivedElements.h"
 #include "oscpack/osc/OscPacketListener.h"
 
-#define ADDRESS "127.0.0.1"
-#define OUTPUT_PORT 7000
-#define INPUT_PORT 7001
-#define OUTPUT_BUFFER_SIZE 1024
-
 #include "mkvModeFunctions.h"
 #include "realtimeModeFunctions.h"
 #include "streamModeFunctions.h"
@@ -38,10 +33,8 @@
 
 int main(int argc, char **argv) 
 {	
-	std::string errorMessage = "";
 	UdpTransmitSocket transmitSocket(IpEndpointName(ADDRESS, OUTPUT_PORT));
-	char buffer[OUTPUT_BUFFER_SIZE];
-	osc::OutboundPacketStream p(buffer, OUTPUT_BUFFER_SIZE);
+	std::string errorMessage = "";
 	
 	if (argc == 3) {
 		//Run mkv mode
@@ -52,7 +45,7 @@ int main(int argc, char **argv)
 		std::thread lt = std::thread(ListenerThread);
 
 		//Run realtime mode
-		errorMessage = realtimeModeFunction(argv[1]);
+		errorMessage = realtimeModeFunction(argv[1], &transmitSocket);
 
 		lt.detach();
 	}
@@ -65,20 +58,15 @@ int main(int argc, char **argv)
 		errorMessage = "Invalid number of arguments. Use \"azureProgram.exe (input.mkv) (output.fbx)\".";
 	}
 
+	//Send end of program osc message
+	sendEndOfProgramMessage(errorMessage, &transmitSocket);
+
+	//End program
 	if (errorMessage == "") {
-		//Send osc message to say program completed		
-		p << osc::BeginBundleImmediate << osc::BeginMessage("/Program Complete/") << 1 << " " << osc::EndMessage << osc::EndBundle;
-		transmitSocket.Send(p.Data(), p.Size());	
-
 		std::cout << "Program Success!" << std::endl;
-
 		return EXIT_SUCCESS;
 	}
 	else {
-		//Send osc message to say program failed
-		p << osc::BeginBundleImmediate << osc::BeginMessage("/Program Complete/") << 0 << errorMessage.c_str() << osc::EndMessage << osc::EndBundle;
-		transmitSocket.Send(p.Data(), p.Size());
-
 		std::cout << errorMessage << std::endl;
 		return EXIT_FAILURE;
 	}	

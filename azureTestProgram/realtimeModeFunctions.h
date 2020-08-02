@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 
-std::string realtimeModeFunction(const char* output_path) {
+std::string realtimeModeFunction(const char* output_path, UdpTransmitSocket* transmitSocket) {
 	std::string errorMessage = "";
 	std::vector<k4abt_skeleton_t> skeletons;
 	uint32_t kinectCount = k4a_device_get_installed_count();
@@ -49,6 +49,9 @@ std::string realtimeModeFunction(const char* output_path) {
 			errorMessage += "Body tracker initialization failed. \n";
 		}
 
+		//Send osc message for recording started
+		sendRecordingStartedMessage(transmitSocket);
+
 		//Start recording
 		if (errorMessage == "" && K4A_FAILED(k4a_device_start_cameras(device, &device_config))) {
 			errorMessage += "Kinect camera failed to start, please try reconnecting.\n";
@@ -57,7 +60,7 @@ std::string realtimeModeFunction(const char* output_path) {
 
 		//Process Kinect recording data
 		int runTime = 0;
-		bool running = true;
+		bool running = true;		
 		while (running && errorMessage == "" && runTime < 1800) {
 			//Increment frame counter, max recording of 1 minute or 1800 frames
 			runTime++;
