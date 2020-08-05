@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <iostream>
+#include <string>
 
 #ifdef IOS_REF
 	#undef  IOS_REF
@@ -271,7 +272,7 @@ void createMesh(FbxScene* pScene) {
 	lMesh->EndPolygon();
 }
 
-void CreateScene(FbxManager *pSdkManager, FbxScene* pScene, std::vector<k4abt_skeleton_t> skeletons)
+void CreateScene(FbxManager *pSdkManager, FbxScene* pScene, std::vector<k4abt_skeleton_t> skeletons, std::string fileName)
 {
 	//Create scene info
 	FbxDocumentInfo* sceneInfo = FbxDocumentInfo::Create(pSdkManager, "SceneInfo");
@@ -289,7 +290,7 @@ void CreateScene(FbxManager *pSdkManager, FbxScene* pScene, std::vector<k4abt_sk
 	createNodes(pScene, &nodes);
 	
 	//Set up animation
-	FbxAnimStack* myAnimStack = FbxAnimStack::Create(pScene, "Animation Stack");
+	FbxAnimStack* myAnimStack = FbxAnimStack::Create(pScene, fileName.c_str());
 	FbxAnimLayer* myAnimBaseLayer = FbxAnimLayer::Create(pScene, "Layer0");
 	myAnimStack->AddMember(myAnimBaseLayer);
 	FbxTime lTime;	
@@ -361,11 +362,15 @@ bool createFBX(std::vector<k4abt_skeleton_t> skeletons, const char* output_path)
 	FbxScene* lScene = NULL;
 	bool lResult;
 
+	//Get file name as string
+	std::experimental::filesystem::path path = output_path;
+	std::string fileName = path.stem().string();
+
 	//Prepare the FBX SDK.
 	InitializeSdkObjects(lSdkManager, lScene);
 
 	//Create the scene.
-	CreateScene(lSdkManager, lScene, skeletons);
+	CreateScene(lSdkManager, lScene, skeletons, fileName);
 
 	//Add a mesh to scene.
 	createMesh(lScene);
