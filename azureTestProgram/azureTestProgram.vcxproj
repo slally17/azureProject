@@ -177,6 +177,7 @@
     <ClInclude Include="oscpack\osc\OscPacketListener.h" />
     <ClInclude Include="oscpack\osc\OscReceivedElements.h" />
     <ClInclude Include="oscpack\osc\OscTypes.h" />
+    <ClInclude Include="videoModeFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

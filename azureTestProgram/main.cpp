@@ -9,8 +9,9 @@
 #include "realtimeModeFunctions.h"
 #include "streamModeFunctions.h"
 #include "imageModeFunctions.h"
+#include "videoModeFunctions.h"
 
-//Syntax: azureProgram.exe (input.mkv) (output.___)
+//Syntax: azureProgram.exe -mode (input.mkv) (output.___)
 	//If an input and output are provided program runs in mkv mode
 	//If only an output is provided program runs in realtime mode
 	//If neither are provided program runs in image mode
@@ -41,30 +42,34 @@ int main(int argc, char **argv)
 {	
 	UdpTransmitSocket transmitSocket(IpEndpointName(ADDRESS, OUTPUT_PORT));
 	std::string errorMessage = "";
+	std::string mode = argv[1];
 	
-	if (argc == 3) {
+	if (mode == "-mkv" && argc == 4) {
 		//Run mkv mode
-		errorMessage = mkvModeFunction(argv[1], argv[2]);
+		errorMessage = mkvModeFunction(argv[2], argv[3]);
 	}
-	else if (argc == 2) {
+	else if (mode == "-realtime" && argc == 3) {
 		//Start thread for receiving end recording message
 		std::thread lt = std::thread(ListenerThread);
 
 		//Run realtime mode
-		errorMessage = realtimeModeFunction(argv[1], &transmitSocket);
+		errorMessage = realtimeModeFunction(argv[2], &transmitSocket);
 
 		lt.detach();
 	}
-	else if (argc == 1) {
+	else if (mode == "-image" && argc == 2) {
 		// Run image mode
 		errorMessage = imageModeFunction();
 		
 		//Run stream mode
 		//errorMessage = streamModeFunction();
 	}
+	else if (mode == "-video" && argc == 2) {
+		errorMessage = videoModeFunction();
+	}
 	else {
 		//Invalid number of arguments
-		errorMessage = "Invalid number of arguments. Use \"azureProgram.exe (input.mkv) (output.fbx)\".";
+		errorMessage = "Invalid number of arguments. Use \"azureProgram.exe -mode (input.mkv) (output.fbx)\".";
 	}
 
 	//Send end of program osc message
